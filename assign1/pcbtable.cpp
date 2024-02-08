@@ -51,6 +51,7 @@ PCB* PCBTable::getPCB(unsigned int idx) {
  * @brief Add a PCB pointer to the PCBTable at index idx.
  *
  * @param pcb: the PCB to add
+ * @param idx: the index to add the PCB at
  */
 void PCBTable::addPCB(PCB* pcb, unsigned int idx) {
     // Check if idx is in range
