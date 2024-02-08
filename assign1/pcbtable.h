@@ -1,25 +1,26 @@
 /**
  * Assignment 1: priority queue of processes
  * @file pcbtable.h
- * @author ??? (TODO: your name)
+ * @author Ben Foltz-Miranda
  * @brief This is the header file for the PCBTable class, an array(list) of all PCB elements in the system..
  * @version 0.1
  */
-//You must complete the all parts marked as "TODO". Delete "TODO" after you are done.
-// Remember to add sufficient and clear comments to your code
+// You must complete the all parts marked as "TODO". Delete "TODO" after you are done.
+//  Remember to add sufficient and clear comments to your code
 #pragma once
 
+#include <vector>
 #include "pcb.h"
 
 /**
  * @brief PCTable is an array of all PCB's in the system
- * 
+ *
  */
 class PCBTable {
 private:
-    // TODO: add your private member variables here
-    // choose a data structure for the PCBTable. 
-    // You can use an array of PCB pointers, e.g. vector<PCB *>. 
+    // choose a data structure for the PCBTable.
+    // You can use an array of PCB pointers, e.g. vector<PCB *>.
+    vector<PCB *> processes;
 
 public:
     /**
@@ -41,7 +42,7 @@ public:
      * @param idx: the index of the PCB to get
      * @return PCB*: pointer to the PCB at index "idx"
      */
-    PCB* getPCB(unsigned int idx);
+    PCB *getPCB(unsigned int idx);
 
     /**
      * @brief Overload of the operator [] that returns the PCB at idx
@@ -49,9 +50,7 @@ public:
      * @param idx
      * @return PCB*
      */
-    PCB *operator[](unsigned int idx) {
-        return getPCB(idx);
-    }
+    PCB *operator[](unsigned int idx) { return getPCB(idx); }
 
     /**
      * @brief Add a PCB pointer to the PCBTable at index idx.
