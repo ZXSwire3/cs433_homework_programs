@@ -12,7 +12,7 @@
 
 #include "pcb.h"
 
-const int MAX_SIZE = 500;
+constexpr int MAX_SIZE = 500;
 
 /**
  * @brief A queue of PCB's that are in the READY state to be scheduled to run.
@@ -21,7 +21,7 @@ const int MAX_SIZE = 500;
 class ReadyQueue {
 private:
     // choose a data structure for the ReadyQueue. No STL class is allowed.
-    PCB *queue[MAX_SIZE];
+    PCB *queue[MAX_SIZE]{};
     int count;
 
 public:
