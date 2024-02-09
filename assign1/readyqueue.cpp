@@ -19,8 +19,8 @@ using namespace std;
  */
 ReadyQueue::ReadyQueue() {
     count = 0; // Initialize the count to 0
-    for (int i = 0; i < MAX_SIZE; i++) {
-        queue[i] = nullptr; // Initialize each element of the queue to nullptr
+    for (auto & process : queue) {
+        process = nullptr; // Initialize each process in the queue to nullptr
     }
 }
 
