@@ -28,7 +28,7 @@ public:
      *
      * @param size: the capacity of the PCBTable
      */
-    PCBTable(int size = 100);
+    explicit PCBTable(int size = 100);
 
     /**
      * @brief Destroy the PCBTable object. Make sure to delete all the PCBs in the table.
