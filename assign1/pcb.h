@@ -36,7 +36,7 @@ public:
      * @param priority: the priority of the process in the range 1-50. Larger number represents higher priority
      * @param state the state of the process.
      */
-    PCB(unsigned int id = 0, unsigned int priority = 1, ProcState state = ProcState::NEW) {
+    explicit PCB(unsigned int id = 0, unsigned int priority = 1, ProcState state = ProcState::NEW) {
         this->id = id;
         this->priority = priority;
         this->state = state;
@@ -46,8 +46,7 @@ public:
      * @brief Destroy the PCB object.
      *
      */
-    ~PCB() {
-    }
+    ~PCB() = default;
 
     /**
      * @brief Get the ID of the PCB.
