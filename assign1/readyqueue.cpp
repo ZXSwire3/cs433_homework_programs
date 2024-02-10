@@ -30,7 +30,7 @@ ReadyQueue::ReadyQueue() {
 ReadyQueue::~ReadyQueue() {
     //  Delete all the PCBs in the table
     for (int i = 0; i < count; i++) {
-        queue[i] = nullptr;
+        queue[i] = nullptr; // Set each process in the queue to nullptr
     }
 }
 
@@ -44,22 +44,23 @@ void ReadyQueue::addPCB(PCB *pcbPtr) {
     pcbPtr->setState(ProcState::READY);
     if (count == 0) { // If the queue is empty, add the PCB to the front of the queue
         queue[0] = pcbPtr;
-    } else if (pcbPtr->getPriority() > queue[0]->getPriority()) { // If the PCB's priority is less than the priority of
+    } else if (pcbPtr->getPriority() > queue[0]->getPriority()) { // If the PCB's priority is greater than the priority of
                                                                   // the PCB at the front of the queue,
         for (int i = count; i > 0; i--) { // Loop through the queue
             queue[i] = queue[i - 1]; // Shift all the PCBs in the queue to the right
         }
         queue[0] = pcbPtr; // Add the PCB to the front of the queue
     } else if (pcbPtr->getPriority() <=
-               queue[count - 1]->getPriority()) { // If the PCB's priority is greater than the priority of the PCB at
+               queue[count - 1]->getPriority()) { // If the PCB's priority is less than the priority of the PCB at
                                                   // the rear of the queue,
         queue[count] = pcbPtr; // Add the PCB to the rear of the queue
     } else { // Otherwise, find the correct position to add the PCB to the queue
-        int i = 0; // Initialize the index to 0
-        while (pcbPtr->getPriority() <= queue[i]->getPriority()) { // Loop through the queue
+        int i = 0; // Holds the index of where the new PCB should be added
+        while (pcbPtr->getPriority() <= queue[i]->getPriority()) { // Loop through the queue until the PCB's priority is
+                                                                  // greater than the priority of the PCB at the current index
             i++; // Increment the index
         }
-        for (int j = count; j > i; j--) {
+        for (int j = count; j > i; j--) { // Loop from the back of the array to the index where the new PCB should be added
             queue[j] = queue[j - 1]; // Shift all the PCBs in the queue to the right
         }
         queue[i] = pcbPtr; // Add the PCB to the queue at the correct position
