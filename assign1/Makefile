@@ -26,4 +26,8 @@ test2:  test2.o pcbtable.o readyqueue.o
 clean:
 	/bin/rm -f *.o $(PROG) .depend
 
+run: $(PROG)
+	./test1
+	./test2
+
 # DO NOT DELETE

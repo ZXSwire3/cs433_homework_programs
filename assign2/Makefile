@@ -23,4 +23,6 @@ $(PROG): $(OBJ)
 clean:
 	rm -f *.o $(PROG) 
 
+run: $(PROG)
+	./$(PROG)
 # DO NOT DELETE
