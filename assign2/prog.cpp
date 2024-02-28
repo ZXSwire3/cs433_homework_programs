@@ -1,7 +1,7 @@
 
 /**
  * Assignment 2: Simple UNIX Shell
- * @file pcbtable.h
+ * @file prog.cpp
  * @author Ben Foltz-Miranda
  * @brief This is the main function of a simple UNIX Shell. You may add additional functions in this file for your
  * implementation
@@ -38,11 +38,9 @@ int parse_command(char command[], char *args[]) {
         return -1;
     }
 
-    int i = 0;
+    int i = 0; // Index of the argument
     while (token != nullptr) {
         token[strcspn(token, "\n")] = '\0';  // Remove newline character from the token
-
-//        cout << "Args[" << i << "] " << "Token: " << token << endl;
 
         // Allocate memory for the argument and copy the token into it
         try {
@@ -61,8 +59,6 @@ int parse_command(char command[], char *args[]) {
     return i; // Return the number of arguments
 }
 
-// TODO: Add additional functions if you need
-
 /**
  * @brief Convert the array of arguments to a single string
  *
@@ -73,9 +69,9 @@ string argsToString(char *args[]) {
     string str;
     for (int i = 0; args[i] != nullptr; i++) {
         if (i != 0) {
-            str += " ";
+            str += " "; // Add a space between arguments
         }
-        str += args[i];
+        str += args[i]; // Add the argument to the string
     }
     return str;
 }
@@ -93,7 +89,7 @@ int main(int argc, char *argv[]) {
     int should_run = 1; /* flag to determine when to exit program */
 
     vector<string> history;  // Store the history of commands
-    // TODO: Add additional variables for the implementation.
+    bool contains_ampersand;  // Whether the command contains an ampersand
 
     while (should_run) {
         printf("osh>");
@@ -110,8 +106,6 @@ int main(int argc, char *argv[]) {
          * (3) parent will invoke wait() unless command included &
          */
 
-        // TODO: Add your code for the implementation
-
         if (num_args == -1) {
             cout << "No command" << endl;
             continue;
@@ -126,11 +120,13 @@ int main(int argc, char *argv[]) {
             // If the command is "!!", get the last command from the history
             if (strcmp(args[0], "!!") == 0) {
                 if (history.empty()) {
-                    cout << "No commands in history" << endl;
+                    cout << "No command history found" << endl;
                     continue;
                 }
                 // Get the last command from the history
                 string last_command = history.back();
+                // Print the last command
+                cout << last_command << endl;
                 // Convert the last command to a C-style string
                 char *cstr = new char[last_command.length() + 1];
                 strcpy(cstr, last_command.c_str());
@@ -142,7 +138,6 @@ int main(int argc, char *argv[]) {
 
             history.push_back(argsToString(args));  // Add the command to the history
 
-
             // If the command is "history", print the history of commands
             if (strcmp(args[0], "history") == 0) {
                 cout << "History of commands:" << endl;
@@ -152,12 +147,24 @@ int main(int argc, char *argv[]) {
                 continue;
             }
 
+            // Check for background execution (contains ampersand)
+            if (strcmp(args[num_args - 1], "&") == 0) { // if last argument is &
+                contains_ampersand = true;
+                args[num_args - 1] = nullptr; // Remove the ampersand from the arguments list
+                num_args--; // Decrement the number of arguments
+            } else if (args[num_args - 1][strlen(args[num_args - 1]) - 1] == '&') { // if last character of last argument is &
+                contains_ampersand = true;
+                args[num_args - 1][strlen(args[num_args - 1]) - 1] = '\0'; // Remove the ampersand from the arguments list
+            } else {
+                contains_ampersand = false;
+            }
+
             pid_t pid = fork();
             if (pid < 0) {
                 cout << "Fork failed" << endl;
                 return 1;
             } else if (pid == 0) {
-                cout << "Child process" << endl;
+//                cout << "Child process" << endl;
 
                 // Check for output redirection
                 for (int i = 0; args[i] != nullptr; i++) {
@@ -188,10 +195,12 @@ int main(int argc, char *argv[]) {
 
                 execvp(args[0], args);
             } else {
-                cout << "Parent process" << endl;
-                if (args[num_args - 1][0] != '&') {
-                    wait(nullptr);
-                    //                cout << "ampersand not found" << endl;
+//                cout << "Parent process" << endl;
+
+                if (!contains_ampersand) {
+                    waitpid(pid, nullptr, 0);
+                } else {
+                    continue;
                 }
             }
         }
