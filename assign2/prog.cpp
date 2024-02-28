@@ -181,7 +181,7 @@ int main(int argc, char *argv[]) {
                     }
                 }
 
-                // Check for input redirection
+                // Loop through the arguments to check for input redirection
                 for (int i = 0; args[i] != nullptr; i++) {
                     if (strcmp(args[i], "<") == 0) {
                         args[i] = nullptr; // Remove the operator from the arguments list
@@ -193,7 +193,10 @@ int main(int argc, char *argv[]) {
                     }
                 }
 
-                execvp(args[0], args);
+                if (execvp(args[0], args) == -1) {
+                    cout << "Command not found" << endl;
+                    return 1;
+                }
             } else {
 //                cout << "Parent process" << endl;
 
