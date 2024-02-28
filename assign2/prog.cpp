@@ -166,8 +166,10 @@ int main(int argc, char *argv[]) {
             } else if (pid == 0) {
 //                cout << "Child process" << endl;
 
-                // Check for output redirection
+                // Loop through the arguments
                 for (int i = 0; args[i] != nullptr; i++) {
+
+                    // Check for output redirection
                     if (strcmp(args[i], ">") == 0) {
                         args[i] = nullptr; // Remove the operator from the arguments list
 
@@ -179,18 +181,20 @@ int main(int argc, char *argv[]) {
                         args[i + 1] = nullptr; // Remove the file name from the arguments list
                         break;
                     }
-                }
 
-                // Loop through the arguments to check for input redirection
-                for (int i = 0; args[i] != nullptr; i++) {
+                    // Check for input redirection
                     if (strcmp(args[i], "<") == 0) {
                         args[i] = nullptr; // Remove the operator from the arguments list
+
+                        // Open the file for reading
                         int fd = open(args[i + 1], O_RDONLY);
                         dup2(fd, STDIN_FILENO); // Redirect stdin to the file
                         close(fd); // Close the original file descriptor
+
                         args[i + 1] = nullptr; // Remove the file name from the arguments list
                         break;
                     }
+
                 }
 
                 if (execvp(args[0], args) == -1) {
