@@ -1,4 +1,3 @@
-
 /**
  * Assignment 2: Simple UNIX Shell
  * @file prog.cpp
@@ -25,8 +24,8 @@ using namespace std;
 /**
  * @brief parse out the command and arguments from the input command separated by spaces
  *
- * @param command
- * @param args
+ * @param command The input command
+ * @param args The pointer array of arguments to be filled
  * @return int the number of arguments
  */
 int parse_command(char command[], char *args[]) {
