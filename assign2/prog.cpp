@@ -27,7 +27,7 @@ using namespace std;
  *
  * @param command
  * @param args
- * @return int
+ * @return int the number of arguments
  */
 int parse_command(char command[], char *args[]) {
     // Get first token (command)
@@ -76,6 +76,12 @@ string argsToString(char *args[]) {
     return str;
 }
 
+/**
+ * @brief Execute the command provided in the array of arguments
+ *
+ * @param args The array of arguments
+ * @return The exit status of the command
+ */
 int executeCommand(char *args[]) {
     if (execvp(args[0], args) == -1) {
         cout << "Command not found" << endl;
