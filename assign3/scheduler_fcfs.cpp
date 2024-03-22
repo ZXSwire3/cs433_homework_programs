@@ -42,23 +42,24 @@ void SchedulerFCFS::print_results() {
 void SchedulerFCFS::simulate() {
     // Simulate the scheduling of processes in the ready queue
     int current_time = 0;
-    int previous_burst_time = 0;
+    // Run the processes in the ready queue
     while (!ready_queue.empty()) {
         PCB current_process = ready_queue.front();
-        cout << "Running Process " << current_process.name << " for " << current_process.burst_time << " time units"
-             << endl;
         ready_queue.pop();
 
-        int turnaround_time = current_process.burst_time + previous_burst_time;
+        cout << "Running Process " << current_process.name << " for " << current_process.burst_time << " time units"
+             << endl;
+
+        // Calculate the turnaround time and waiting time for the current process
+        int turnaround_time = current_time + current_process.burst_time - current_process.arrival_time;
         turnaround_times.push_back(turnaround_time);
 
         int waiting_time = current_time - current_process.arrival_time;
         waiting_times.push_back(waiting_time);
 
+        // Update the total turnaround time and waiting time
         current_time += current_process.burst_time;
-        total_turnaround_time += current_process.burst_time + waiting_time;
+        total_turnaround_time += turnaround_time;
         total_waiting_time += waiting_time;
-
-        previous_burst_time += current_process.burst_time;
     }
 }
