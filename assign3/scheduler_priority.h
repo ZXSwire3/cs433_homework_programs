@@ -1,22 +1,36 @@
 /**
 * Assignment 3: CPU Scheduler
  * @file scheduler_priority.h
- * @author ??? (TODO: your name)
+ * @author Ben Foltz-Miranda
  * @brief This Scheduler class implements the Priority scheduling algorithm.
  * @version 0.1
  */
-//You must complete the all parts marked as "TODO". Delete "TODO" after you are done.
-// Remember to add sufficient and clear comments to your code
-
 
 #ifndef ASSIGN3_SCHEDULER_PRIORITY_H
 #define ASSIGN3_SCHEDULER_PRIORITY_H
 
 #include "scheduler.h"
+#include <queue>
+#include <map>
 
 class SchedulerPriority : public Scheduler {
 private:
-    // TODO: add necessary member variables here for your implementation
+    // Define a comparison function for the priority queue
+    struct ComparePriority {
+        bool operator()(const PCB& p1, const PCB& p2) {
+            // if two processes have the same priority time, the one with the smaller ID is selected
+            if (p1.priority == p2.priority)
+                return p1.id > p2.id;
+            // otherwise, the one with the higher priority (higher number) is selected
+            return p1.priority < p2.priority;
+        }
+    };
+    priority_queue<PCB, vector<PCB>, ComparePriority> ready_queue;
+    int original_size;
+    int total_turnaround_time;
+    int total_waiting_time;
+    map<string, int> turnaround_times_map;
+    map<string, int> waiting_times_map;
 
 public:
     /**
