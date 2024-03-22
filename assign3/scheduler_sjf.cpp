@@ -50,11 +50,14 @@ void SchedulerSJF::simulate() {
         cout << "Running Process " << current_process.name << " for " << current_process.burst_time << " time units"
              << endl;
 
-        // Calculate the turnaround time and waiting time for the current process
+        // Calculate the turnaround time
         int turnaround_time = current_time + current_process.burst_time - current_process.arrival_time;
+        // Add the turnaround time to the turnaround map
         turnaround_times_map[current_process.name] = turnaround_time;
 
+        // Calculate the waiting time
         int waiting_time = current_time - current_process.arrival_time;
+        // Add the waiting time to the waiting map
         waiting_times_map[current_process.name] = waiting_time;
 
         // Update the total turnaround time and waiting time
