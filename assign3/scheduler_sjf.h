@@ -18,7 +18,11 @@ private:
     // Define a comparison function for the priority queue
     struct CompareBurstTime {
         bool operator()(const PCB& p1, const PCB& p2) {
-            // return "true" if "p1" is ordered before "p2", for example:
+            // if two processes have the same burst time, the one with the smaller ID is selected
+            if (p1.burst_time == p2.burst_time) {
+                return p1.id > p2.id;
+            }
+            // otherwise, the process with the smaller burst time is selected
             return p1.burst_time > p2.burst_time;
         }
     };
