@@ -17,15 +17,15 @@ Running Process T4 for 15 time units
 Running Process T1 for 20 time units
 Running Process T5 for 20 time units
 Running Process T2 for 25 time units
-Running Process T8 for 25 time units
 Running Process T3 for 25 time units
+Running Process T8 for 25 time units
 Running Process T7 for 30 time units
 T1 turn-around time = 45, waiting time = 25
 T2 turn-around time = 90, waiting time = 65
-T3 turn-around time = 140, waiting time = 115
+T3 turn-around time = 115, waiting time = 90
 T4 turn-around time = 25, waiting time = 10
 T5 turn-around time = 65, waiting time = 45
 T6 turn-around time = 10, waiting time = 0
 T7 turn-around time = 170, waiting time = 140
-T8 turn-around time = 115, waiting time = 90
+T8 turn-around time = 140, waiting time = 115
 Average turn-around time = 82.5, Average waiting time = 61.25
