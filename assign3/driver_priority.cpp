@@ -1,5 +1,5 @@
 /**
- * Driver (main) program for FCFS scheduling algorithm.
+ * Driver (main) program for Priority scheduling algorithm.
  * The input file is a text file containing the process information in the following format:
  * [name] [priority] [CPU burst]
  */
