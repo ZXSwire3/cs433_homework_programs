@@ -1,21 +1,33 @@
 /**
 * Assignment 3: CPU Scheduler
  * @file scheduler_fcfs.h
- * @author ??? (TODO: your name)
+ * @author Ben Foltz-Miranda
  * @brief This Scheduler class implements the SJF scheduling algorithm.
  * @version 0.1
  */
-//You must complete the all parts marked as "TODO". Delete "TODO" after you are done.
-// Remember to add sufficient and clear comments to your code
 
 #ifndef ASSIGN3_SCHEDULER_SJF_H
 #define ASSIGN3_SCHEDULER_SJF_H
 
 #include "scheduler.h"
+#include <queue>
+#include <map>
 
 class SchedulerSJF : public Scheduler {
 private:
-    // TODO: add necessary member variables here for your implementation
+    // Define a comparison function for the priority queue
+    struct CompareBurstTime {
+        bool operator()(const PCB& p1, const PCB& p2) {
+            // return "true" if "p1" is ordered before "p2", for example:
+            return p1.burst_time > p2.burst_time;
+        }
+    };
+    priority_queue<PCB, vector<PCB>, CompareBurstTime> ready_queue;
+    int original_size;
+    int total_turnaround_time;
+    int total_waiting_time;
+    map<string, int> turnaround_times_map;
+    map<string, int> waiting_times_map;
 
 public:
     /**
