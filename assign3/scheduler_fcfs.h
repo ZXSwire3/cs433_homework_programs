@@ -1,7 +1,7 @@
 /**
 * Assignment 3: CPU Scheduler
  * @file scheduler_fcfs.h
- * @author ??? (TODO: your name)
+ * @author Ben Foltz-Miranda
  * @brief This Scheduler class implements the FCSF scheduling algorithm.
  * @version 0.1
  */
@@ -12,12 +12,19 @@
 #define ASSIGN3_SCHEDULER_FCFS_H
 
 #include "scheduler.h"
+#include <queue>
 /**
  * @brief This Scheduler class implements the FCFS scheduling algorithm.
  */
 class SchedulerFCFS : public Scheduler {
 private:
     // TODO: add necessary member variables here for your implementation
+    queue<PCB> ready_queue;
+    int original_size;
+    int total_turnaround_time;
+    vector<int> turnaround_times;
+    int total_waiting_time;
+    vector<int> waiting_times;
 
 public:
     /**
