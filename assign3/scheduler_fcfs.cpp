@@ -27,7 +27,7 @@ void SchedulerFCFS::init(vector<PCB>& process_list) {
 void SchedulerFCFS::print_results() {
     // Print the turnaround time and waiting time for each process
     for (int i = 0; i < original_size; ++i) {
-        cout << "T" << i << " turn-around time = " << turnaround_times[i] << ", waiting time = " << waiting_times[i]
+        cout << "T" << i + 1 << " turn-around time = " << turnaround_times[i] << ", waiting time = " << waiting_times[i]
              << endl;
     }
 
