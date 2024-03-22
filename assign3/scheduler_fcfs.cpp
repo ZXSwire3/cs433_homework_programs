@@ -5,18 +5,16 @@
  * @brief This Scheduler class implements the FCSF scheduling algorithm.
  * @version 0.1
  */
-// You must complete the all parts marked as "TODO". Delete "TODO" after you are done.
-//  Remember to add sufficient and clear comments to your code
-
 #include "scheduler_fcfs.h"
 
-// TODO: add implementation of SchedulerFCFS constructor, destrcutor and
-// member functions init, print_results, and simulate here
-SchedulerFCFS::SchedulerFCFS() { ready_queue = queue<PCB>(); }
-
-SchedulerFCFS::~SchedulerFCFS() {
-    // Destructor
+SchedulerFCFS::SchedulerFCFS() {
+    ready_queue = queue<PCB>();
+    original_size = 0;
+    total_turnaround_time = 0;
+    total_waiting_time = 0;
 }
+
+SchedulerFCFS::~SchedulerFCFS() = default;
 
 void SchedulerFCFS::init(vector<PCB>& process_list) {
     // Initialize the scheduler
@@ -27,13 +25,13 @@ void SchedulerFCFS::init(vector<PCB>& process_list) {
 }
 
 void SchedulerFCFS::print_results() {
-    for (int i = 0; i < waiting_times.size(); ++i) {
+    // Print the turnaround time and waiting time for each process
+    for (int i = 0; i < original_size; ++i) {
         cout << "T" << i << " turn-around time = " << turnaround_times[i] << ", waiting time = " << waiting_times[i]
              << endl;
     }
 
     // Print the results of the simulation
-    cout << "FCFS Scheduler Results" << endl;
     cout << "Average turn-around time = " << total_turnaround_time / (double) original_size
          << ", Average waiting time = " << total_waiting_time / (double) original_size
          << endl;
