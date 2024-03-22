@@ -5,8 +5,6 @@
  * @brief This Scheduler class implements the FCSF scheduling algorithm.
  * @version 0.1
  */
-//You must complete the all parts marked as "TODO". Delete "TODO" after you are done.
-// Remember to add sufficient and clear comments to your code
 
 #ifndef ASSIGN3_SCHEDULER_FCFS_H
 #define ASSIGN3_SCHEDULER_FCFS_H
@@ -18,7 +16,6 @@
  */
 class SchedulerFCFS : public Scheduler {
 private:
-    // TODO: add necessary member variables here for your implementation
     queue<PCB> ready_queue;
     int original_size;
     int total_turnaround_time;
