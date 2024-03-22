@@ -1,0 +1,32 @@
+CS 433 Programming assignment 3
+Author: xxxxxx and xxxxxxx
+Date: xx/xx/20xx
+Course: CS433 (Operating Systems)
+Description : test FCFS scheduling algorithm
+=================================
+Running ./fcfs schedule.txt
+Process 0: T1 has priority 4 and burst time 20
+Process 1: T2 has priority 3 and burst time 25
+Process 2: T3 has priority 3 and burst time 25
+Process 3: T4 has priority 5 and burst time 15
+Process 4: T5 has priority 5 and burst time 20
+Process 5: T6 has priority 1 and burst time 10
+Process 6: T7 has priority 3 and burst time 30
+Process 7: T8 has priority 10 and burst time 25
+Running Process T1 for 20 time units
+Running Process T2 for 25 time units
+Running Process T3 for 25 time units
+Running Process T4 for 15 time units
+Running Process T5 for 20 time units
+Running Process T6 for 10 time units
+Running Process T7 for 30 time units
+Running Process T8 for 25 time units
+T1 turn-around time = 20, waiting time = 0
+T2 turn-around time = 45, waiting time = 20
+T3 turn-around time = 70, waiting time = 45
+T4 turn-around time = 85, waiting time = 70
+T5 turn-around time = 105, waiting time = 85
+T6 turn-around time = 115, waiting time = 105
+T7 turn-around time = 145, waiting time = 115
+T8 turn-around time = 170, waiting time = 145
+Average turn-around time = 94.375, Average waiting time = 73.125
