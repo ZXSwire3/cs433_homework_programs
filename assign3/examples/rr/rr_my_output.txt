@@ -1,0 +1,56 @@
+CS 433 Programming assignment 3
+Author: Ben Foltz-Miranda
+Date: 03/29/2024
+Course: CS433 (Operating Systems)
+Description : test RR scheduling algorithm 
+=================================
+Process 0: T1 has priority 4 and burst time 20
+Process 1: T2 has priority 3 and burst time 25
+Process 2: T3 has priority 3 and burst time 25
+Process 3: T4 has priority 5 and burst time 15
+Process 4: T5 has priority 5 and burst time 20
+Process 5: T6 has priority 1 and burst time 10
+Process 6: T7 has priority 3 and burst time 30
+Process 7: T8 has priority 10 and burst time 25
+Running Process T1 for 6 time units
+Running Process T2 for 6 time units
+Running Process T3 for 6 time units
+Running Process T4 for 6 time units
+Running Process T5 for 6 time units
+Running Process T6 for 6 time units
+Running Process T7 for 6 time units
+Running Process T8 for 6 time units
+Running Process T1 for 6 time units
+Running Process T2 for 6 time units
+Running Process T3 for 6 time units
+Running Process T4 for 6 time units
+Running Process T5 for 6 time units
+Running Process T6 for 4 time units
+Running Process T7 for 6 time units
+Running Process T8 for 6 time units
+Running Process T1 for 6 time units
+Running Process T2 for 6 time units
+Running Process T3 for 6 time units
+Running Process T4 for 3 time units
+Running Process T5 for 6 time units
+Running Process T7 for 6 time units
+Running Process T8 for 6 time units
+Running Process T1 for 2 time units
+Running Process T2 for 6 time units
+Running Process T3 for 6 time units
+Running Process T5 for 2 time units
+Running Process T7 for 6 time units
+Running Process T8 for 6 time units
+Running Process T2 for 1 time units
+Running Process T3 for 1 time units
+Running Process T7 for 6 time units
+Running Process T8 for 1 time units
+T1 turn-around time = 135, waiting time = 115
+T2 turn-around time = 162, waiting time = 137
+T3 turn-around time = 163, waiting time = 138
+T4 turn-around time = 115, waiting time = 100
+T5 turn-around time = 149, waiting time = 129
+T6 turn-around time = 82, waiting time = 72
+T7 turn-around time = 169, waiting time = 139
+T8 turn-around time = 170, waiting time = 145
+Average turn-around time = 143.125, Average waiting time = 121.875
