@@ -1,21 +1,47 @@
 /**
-* Assignment 3: CPU Scheduler
+ * Assignment 3: CPU Scheduler
  * @file scheduler_priority_rr.h
- * @author ??? (TODO: your name)
+ * @author Ben Foltz-Miranda
  * @brief This Scheduler class implements the Priority RR scheduling algorithm.
  * @version 0.1
  */
-//You must complete the all parts marked as "TODO". Delete "TODO" after you are done.
-// Remember to add sufficient and clear comments to your code
 
 #ifndef ASSIGN3_SCHEDULER_PRIORITY_RR_H
 #define ASSIGN3_SCHEDULER_PRIORITY_RR_H
+
+#include <map>
+#include <queue>
 
 #include "scheduler.h"
 
 class SchedulerPriorityRR : public Scheduler {
 private:
-    // TODO: add necessary member variables here for your implementation
+    // Define a comparison function for the priority queue
+    struct ComparePriority {
+        bool operator()(const PCB& p1, const PCB& p2) {
+            // if two processes have the same priority, the one with the smaller ID is selected
+            if (p1.priority == p2.priority) {
+                return p1.id > p2.id;
+            }
+            // otherwise, the process with the higher priority (higher number) is selected
+            return p1.priority < p2.priority;
+        }
+    };
+    priority_queue<PCB, vector<PCB>, ComparePriority> priority_queue;
+
+    queue<PCB> ready_queue;
+    queue<PCB> temp_queue;
+    queue<PCB> rr_queue;
+
+    int original_size;
+    int time_quantum;
+    int total_turnaround_time;
+    int total_waiting_time;
+    map<string, int> turnaround_times_map;
+    map<string, int> waiting_times_map;
+    map<string, vector<PCB>> priority_map;
+
+    void scheduleProcesses();
 
 public:
     /**
@@ -46,8 +72,7 @@ public:
      *        It stops when all processes are finished.
      */
     void simulate() override;
-
 };
 
 
-#endif //ASSIGN3_SCHEDULER_PRIORITY_RR_H
+#endif  // ASSIGN3_SCHEDULER_PRIORITY_RR_H
