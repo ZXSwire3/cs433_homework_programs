@@ -39,9 +39,6 @@ private:
     int total_waiting_time;
     map<string, int> turnaround_times_map;
     map<string, int> waiting_times_map;
-    map<string, vector<PCB>> priority_map;
-
-    void scheduleProcesses();
 
 public:
     /**
