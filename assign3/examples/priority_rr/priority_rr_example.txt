@@ -1,0 +1,47 @@
+CS 433 Programming assignment 3
+Author: xxxxxx and xxxxxxx
+Date: xx/xx/20xx
+Course: CS433 (Operating Systems)
+Description : test Priority RR scheduling algorithm
+=================================
+Process 0: T1 has priority 4 and burst time 20
+Process 1: T2 has priority 3 and burst time 25
+Process 2: T3 has priority 3 and burst time 25
+Process 3: T4 has priority 5 and burst time 15
+Process 4: T5 has priority 5 and burst time 20
+Process 5: T6 has priority 1 and burst time 10
+Process 6: T7 has priority 3 and burst time 30
+Process 7: T8 has priority 10 and burst time 25
+Running Process T8 for 25 time units
+Running Process T4 for 6 time units
+Running Process T5 for 6 time units
+Running Process T4 for 6 time units
+Running Process T5 for 6 time units
+Running Process T4 for 3 time units
+Running Process T5 for 8 time units
+Running Process T1 for 20 time units
+Running Process T2 for 6 time units
+Running Process T3 for 6 time units
+Running Process T7 for 6 time units
+Running Process T2 for 6 time units
+Running Process T3 for 6 time units
+Running Process T7 for 6 time units
+Running Process T2 for 6 time units
+Running Process T3 for 6 time units
+Running Process T7 for 6 time units
+Running Process T2 for 6 time units
+Running Process T3 for 6 time units
+Running Process T7 for 6 time units
+Running Process T2 for 1 time units
+Running Process T3 for 1 time units
+Running Process T7 for 6 time units
+Running Process T6 for 10 time units
+T1 turn-around time = 80, waiting time = 60
+T2 turn-around time = 153, waiting time = 128
+T3 turn-around time = 154, waiting time = 129
+T4 turn-around time = 52, waiting time = 37
+T5 turn-around time = 60, waiting time = 40
+T6 turn-around time = 170, waiting time = 160
+T7 turn-around time = 160, waiting time = 130
+T8 turn-around time = 25, waiting time = 0
+Average turn-around time = 106.75, Average waiting time = 85.5

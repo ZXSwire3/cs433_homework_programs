@@ -1,5 +1,5 @@
 /**
-* Assignment 3: CPU Scheduler
+ * Assignment 3: CPU Scheduler
  * @file scheduler_priority_rr.cpp
  * @author Ben Foltz-Miranda
  * @brief This Scheduler class implements the Priority RR scheduling algorithm.
@@ -19,7 +19,7 @@ SchedulerPriorityRR::~SchedulerPriorityRR() = default;
 void SchedulerPriorityRR::init(vector<PCB>& process_list) {
     // Initialize the scheduler
     for (const auto& i: process_list) {
-        ready_queue.push(i);
+        priority_queue.push(i);
     }
     original_size = process_list.size();
 }
@@ -39,43 +39,73 @@ void SchedulerPriorityRR::print_results() {
          << ", Average waiting time = " << total_waiting_time / (double) original_size << endl;
 }
 
-void SchedulerPriorityRR::simulate() {
-    // Simulate the scheduling of processes in the ready queue
-    int current_time = 0;
-    // Run the processes in the ready queue
-    while (!ready_queue.empty()) {
-        PCB current_process = ready_queue.front();
-        ready_queue.pop();
+void SchedulerPriorityRR::processPCB(PCB& current_process, int& current_time,
+                                     map<string, int>& original_burst_times_map) {
+    current_time += current_process.burst_time;
+    cout << "Running Process " << current_process.name << " for " << current_process.burst_time << " time units"
+         << endl;
 
-        cout << "Running Process " << current_process.name << " for " << current_process.burst_time << " time units"
-             << endl;
+    // Calculate the turnaround time
+    int turnaround_time = current_time - current_process.arrival_time;
+    // Add the turnaround time to the turnaround map
+    turnaround_times_map[current_process.name] = turnaround_time;
 
-        // Calculate the turnaround time
-        int turnaround_time = current_time + current_process.burst_time - current_process.arrival_time;
-        // Add the turnaround time to the turnaround map
-        turnaround_times_map[current_process.name] = turnaround_time;
+    // Calculate the waiting time
+    int waiting_time = current_time - original_burst_times_map[current_process.name] - current_process.arrival_time;
+    // Add the waiting time to the waiting map
+    waiting_times_map[current_process.name] = waiting_time;
 
-        // Calculate the waiting time
-        int waiting_time = current_time - current_process.arrival_time;
-        // Add the waiting time to the waiting map
-        waiting_times_map[current_process.name] = waiting_time;
-
-        // Update the total turnaround time and waiting time
-        current_time += current_process.burst_time;
-        total_turnaround_time += turnaround_time;
-        total_waiting_time += waiting_time;
-    }
+    // Update the total turnaround time and waiting time
+    total_turnaround_time += turnaround_time;
+    total_waiting_time += waiting_time;
 }
 
-// add all proccesses to priority queue
-//simulate
-// loop through the whole queue
-// add all proccesses to the priority map
+void SchedulerPriorityRR::simulate() {
+    map<string, int> original_burst_times_map;
+    map<int, queue<PCB>, greater<int>> priorityQueues;
 
-// simulate like normal and priority simulate
-// check priority map to see if there are any processes with the same priority
-// if there are, do round_robin scheduling
-// this could probably be done with a temp_queue that is looped through until the proccesses are done
+    while (!priority_queue.empty()) {
+        PCB topElement = priority_queue.top();
+        priority_queue.pop();
 
-// if there are not, do priority scheduling
-// just run from priority_queue
+        original_burst_times_map[topElement.name] = topElement.burst_time;
+
+        priorityQueues[topElement.priority].push(topElement);
+    }
+
+    int current_time = 0;
+    for (auto& priority_queue_pair: priorityQueues) {
+        queue<PCB>& pcb_queue = priority_queue_pair.second;
+
+        // Check if there are multiple PCBs with the same priority
+        if (pcb_queue.size() > 1) {
+            // If there are, run them in a round-robin schedule
+            while (!pcb_queue.empty()) {
+                PCB current_process = pcb_queue.front();
+                pcb_queue.pop();
+
+                // If the burst time is greater than the time quantum and there's more than one PCB left in the queue,
+                // run the process for the time quantum
+                if (current_process.burst_time > time_quantum && pcb_queue.size() > 0) {
+                    // Update the remaining burst time and current time
+                    current_process.burst_time -= time_quantum;
+                    current_time += time_quantum;
+
+                    cout << "Running Process " << current_process.name << " for " << time_quantum << " time units"
+                         << endl;
+
+                    // Add the process back to the queue
+                    pcb_queue.push(current_process);
+                } else {
+                    processPCB(current_process, current_time, original_burst_times_map);
+                }
+            }
+        } else {
+            // If there's only one PCB with a certain priority, run it normally
+            PCB current_process = pcb_queue.front();
+            pcb_queue.pop();
+
+            processPCB(current_process, current_time, original_burst_times_map);
+        }
+    }
+}
