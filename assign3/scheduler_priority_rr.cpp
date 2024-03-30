@@ -19,7 +19,7 @@ SchedulerPriorityRR::~SchedulerPriorityRR() = default;
 void SchedulerPriorityRR::init(vector<PCB>& process_list) {
     // Initialize the scheduler
     for (const auto& i: process_list) {
-        priority_queue.push(i);
+        priority_pcb_queue.push(i);
     }
     original_size = process_list.size();
 }
@@ -35,8 +35,8 @@ void SchedulerPriorityRR::print_results() {
     }
 
     // Print the results of the simulation
-    cout << "Average turn-around time = " << total_turnaround_time / (double) original_size
-         << ", Average waiting time = " << total_waiting_time / (double) original_size << endl;
+    cout << "Average turn-around time = " << total_turnaround_time / static_cast<double>(original_size)
+         << ", Average waiting time = " << total_waiting_time / static_cast<double>(original_size) << endl;
 }
 
 void SchedulerPriorityRR::processPCB(PCB& current_process, int& current_time,
@@ -61,20 +61,27 @@ void SchedulerPriorityRR::processPCB(PCB& current_process, int& current_time,
 }
 
 void SchedulerPriorityRR::simulate() {
+    // Create a map to store the original burst times of the processes
     map<string, int> original_burst_times_map;
-    map<int, queue<PCB>, greater<int>> priorityQueues;
+    // Create a map to store the pcb queues with the same priority
+    map<int, queue<PCB>, greater<int>> priority_map_queues;
 
-    while (!priority_queue.empty()) {
-        PCB topElement = priority_queue.top();
-        priority_queue.pop();
+    // Loop through the priority queue and add the PCBs to the priority map queues
+    while (!priority_pcb_queue.empty()) {
+        PCB top_element = priority_pcb_queue.top();
+        priority_pcb_queue.pop();
 
-        original_burst_times_map[topElement.name] = topElement.burst_time;
+        // Add the original burst time to the map
+        original_burst_times_map[top_element.name] = top_element.burst_time;
 
-        priorityQueues[topElement.priority].push(topElement);
+        // Add the PCB to the priority map queues
+        priority_map_queues[top_element.priority].push(top_element);
     }
 
     int current_time = 0;
-    for (auto& priority_queue_pair: priorityQueues) {
+    // Loop through the priority map queues
+    for (auto& priority_queue_pair: priority_map_queues) {
+        // Get the PCB queue with the same priority
         queue<PCB>& pcb_queue = priority_queue_pair.second;
 
         // Check if there are multiple PCBs with the same priority
@@ -86,7 +93,7 @@ void SchedulerPriorityRR::simulate() {
 
                 // If the burst time is greater than the time quantum and there's more than one PCB left in the queue,
                 // run the process for the time quantum
-                if (current_process.burst_time > time_quantum && pcb_queue.size() > 0) {
+                if (current_process.burst_time > time_quantum && !pcb_queue.empty()) {
                     // Update the remaining burst time and current time
                     current_process.burst_time -= time_quantum;
                     current_time += time_quantum;
@@ -96,7 +103,7 @@ void SchedulerPriorityRR::simulate() {
 
                     // Add the process back to the queue
                     pcb_queue.push(current_process);
-                } else {
+                } else { // Otherwise, run the process normally
                     processPCB(current_process, current_time, original_burst_times_map);
                 }
             }

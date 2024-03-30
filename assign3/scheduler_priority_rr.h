@@ -27,7 +27,7 @@ private:
             return p1.priority < p2.priority;
         }
     };
-    priority_queue<PCB, vector<PCB>, ComparePriority> priority_queue;
+    priority_queue<PCB, vector<PCB>, ComparePriority> priority_pcb_queue;
 
     int original_size;
     int time_quantum;
