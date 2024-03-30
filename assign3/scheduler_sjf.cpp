@@ -8,14 +8,25 @@
 
 #include "scheduler_sjf.h"
 
+/**
+ * @brief Construct a new SchedulerSJF object
+ */
 SchedulerSJF::SchedulerSJF() {
     original_size = 0;
     total_turnaround_time = 0;
     total_waiting_time = 0;
 }
 
+/**
+ * @brief Destroy the SchedulerSJF object
+ */
 SchedulerSJF::~SchedulerSJF() = default;
 
+/**
+ * @brief This function is called once before the simulation starts.
+ *        It is used to initialize the scheduler.
+ * @param process_list The list of processes in the simulation.
+ */
 void SchedulerSJF::init(vector<PCB>& process_list) {
     // Initialize the scheduler
     for (const auto& i: process_list) {
@@ -24,6 +35,10 @@ void SchedulerSJF::init(vector<PCB>& process_list) {
     original_size = ready_queue.size();
 }
 
+/**
+ * @brief This function is called once after the simulation ends.
+ *        It is used to print out the results of the simulation.
+ */
 void SchedulerSJF::print_results() {
     // Print the turnaround time and waiting time for each process
     for (const auto& pair: turnaround_times_map) {
@@ -39,6 +54,10 @@ void SchedulerSJF::print_results() {
          << ", Average waiting time = " << total_waiting_time / (double) original_size << endl;
 }
 
+/**
+ * @brief This function simulates the scheduling of processes in the ready queue.
+ *        It stops when all processes are finished.
+ */
 void SchedulerSJF::simulate() {
     // Simulate the scheduling of processes in the ready queue
     int current_time = 0;

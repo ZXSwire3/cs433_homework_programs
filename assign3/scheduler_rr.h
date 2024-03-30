@@ -15,12 +15,19 @@
 
 class SchedulerRR : public Scheduler {
 private:
+    // The ready queue of processes
     queue<PCB> ready_queue;
+    // The original size of the ready queue
     int original_size;
+    // The time quantum for the Round Robin algorithm
     int time_quantum;
+    // The total turnaround time of all processes
     int total_turnaround_time;
+    // The total waiting time of all processes
     int total_waiting_time;
+    // The turnaround time for each process
     map<string, int> turnaround_times_map;
+    // The waiting time for each process
     map<string, int> waiting_times_map;
 
 public:

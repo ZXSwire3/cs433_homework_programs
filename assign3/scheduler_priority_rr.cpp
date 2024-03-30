@@ -8,14 +8,25 @@
 
 #include "scheduler_priority_rr.h"
 
+/**
+ * @brief Construct a new SchedulerPriority object
+ */
 SchedulerPriorityRR::SchedulerPriorityRR(int time_quantum) : time_quantum(time_quantum) {
     original_size = 0;
     total_turnaround_time = 0;
     total_waiting_time = 0;
 }
 
+/**
+ * @brief Destroy the SchedulerPriority object
+ */
 SchedulerPriorityRR::~SchedulerPriorityRR() = default;
 
+/**
+ * @brief This function is called once before the simulation starts.
+ *        It is used to initialize the scheduler.
+ * @param process_list The list of processes in the simulation.
+ */
 void SchedulerPriorityRR::init(vector<PCB>& process_list) {
     // Initialize the scheduler
     for (const auto& i: process_list) {
@@ -24,6 +35,10 @@ void SchedulerPriorityRR::init(vector<PCB>& process_list) {
     original_size = process_list.size();
 }
 
+/**
+ * @brief This function is called once after the simulation ends.
+ *        It is used to print out the results of the simulation.
+ */
 void SchedulerPriorityRR::print_results() {
     // Print the turnaround time and waiting time for each process
     for (const auto& pair: turnaround_times_map) {
@@ -39,6 +54,12 @@ void SchedulerPriorityRR::print_results() {
          << ", Average waiting time = " << total_waiting_time / static_cast<double>(original_size) << endl;
 }
 
+/**
+ * @brief This function processes a PCB and updates the current time.
+ * @param current_process The current process to process
+ * @param current_time The current time
+ * @param original_burst_times_map The original burst times of the processes
+ */
 void SchedulerPriorityRR::processPCB(PCB& current_process, int& current_time,
                                      map<string, int>& original_burst_times_map) {
     current_time += current_process.burst_time;
@@ -60,6 +81,10 @@ void SchedulerPriorityRR::processPCB(PCB& current_process, int& current_time,
     total_waiting_time += waiting_time;
 }
 
+/**
+ * @brief This function simulates the scheduling of processes in the ready queue.
+ *        It stops when all processes are finished.
+ */
 void SchedulerPriorityRR::simulate() {
     // Create a map to store the original burst times of the processes
     map<string, int> original_burst_times_map;
@@ -103,7 +128,7 @@ void SchedulerPriorityRR::simulate() {
 
                     // Add the process back to the queue
                     pcb_queue.push(current_process);
-                } else { // Otherwise, run the process normally
+                } else {  // Otherwise, run the process normally
                     processPCB(current_process, current_time, original_burst_times_map);
                 }
             }

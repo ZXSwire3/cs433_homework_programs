@@ -27,15 +27,27 @@ private:
             return p1.priority < p2.priority;
         }
     };
+    // The ready queue of processes
     priority_queue<PCB, vector<PCB>, ComparePriority> priority_pcb_queue;
-
+    // The original size of the ready queue
     int original_size;
+    // The time quantum for the Round Robin algorithm
     int time_quantum;
+    // The total turnaround time of all processes
     int total_turnaround_time;
+    // The total waiting time of all processes
     int total_waiting_time;
+    // The turnaround time for each process
     map<string, int> turnaround_times_map;
+    // The waiting time for each process
     map<string, int> waiting_times_map;
 
+    /**
+     * @brief This function processes a PCB and updates the current time.
+     * @param current_process The current process to process
+     * @param current_time The current time
+     * @param original_burst_times_map The original burst times of the processes
+     */
     void processPCB(PCB& current_process, int& current_time, map<string, int>& original_burst_times_map);
 
 public:

@@ -16,11 +16,17 @@
  */
 class SchedulerFCFS : public Scheduler {
 private:
+    // The ready queue of processes
     queue<PCB> ready_queue;
+    // The original size of the ready queue
     int original_size;
+    // The total turnaround time of all processes
     int total_turnaround_time;
+    // The turnaround time for each process
     vector<int> turnaround_times;
+    // The total waiting time of all processes
     int total_waiting_time;
+    // The waiting time for each process
     vector<int> waiting_times;
 
 public:

@@ -7,6 +7,9 @@
  */
 #include "scheduler_fcfs.h"
 
+/**
+ * @brief Construct a new SchedulerFCFS object
+ */
 SchedulerFCFS::SchedulerFCFS() {
     ready_queue = queue<PCB>();
     original_size = 0;
@@ -14,8 +17,16 @@ SchedulerFCFS::SchedulerFCFS() {
     total_waiting_time = 0;
 }
 
+/**
+ * @brief Destroy the SchedulerFCFS object
+ */
 SchedulerFCFS::~SchedulerFCFS() = default;
 
+/**
+ * @brief This function is called once before the simulation starts.
+ *        It is used to initialize the scheduler.
+ * @param process_list The list of processes in the simulation.
+ */
 void SchedulerFCFS::init(vector<PCB>& process_list) {
     // Initialize the scheduler
     for (const auto& i: process_list) {
@@ -24,6 +35,10 @@ void SchedulerFCFS::init(vector<PCB>& process_list) {
     original_size = ready_queue.size();
 }
 
+/**
+ * @brief This function is called once after the simulation ends.
+ *        It is used to print out the results of the simulation.
+ */
 void SchedulerFCFS::print_results() {
     // Print the turnaround time and waiting time for each process
     for (int i = 0; i < original_size; ++i) {
@@ -33,10 +48,13 @@ void SchedulerFCFS::print_results() {
 
     // Print the results of the simulation
     cout << "Average turn-around time = " << total_turnaround_time / (double) original_size
-         << ", Average waiting time = " << total_waiting_time / (double) original_size
-         << endl;
+         << ", Average waiting time = " << total_waiting_time / (double) original_size << endl;
 }
 
+/**
+ * @brief This function simulates the scheduling of processes in the ready queue.
+ *        It stops when all processes are finished.
+ */
 void SchedulerFCFS::simulate() {
     // Simulate the scheduling of processes in the ready queue
     int current_time = 0;
