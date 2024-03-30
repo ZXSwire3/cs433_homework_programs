@@ -29,16 +29,14 @@ private:
     };
     priority_queue<PCB, vector<PCB>, ComparePriority> priority_queue;
 
-    queue<PCB> ready_queue;
-    queue<PCB> temp_queue;
-    queue<PCB> rr_queue;
-
     int original_size;
     int time_quantum;
     int total_turnaround_time;
     int total_waiting_time;
     map<string, int> turnaround_times_map;
     map<string, int> waiting_times_map;
+
+    void processPCB(PCB& current_process, int& current_time, map<string, int>& original_burst_times_map);
 
 public:
     /**
