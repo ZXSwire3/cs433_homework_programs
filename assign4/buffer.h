@@ -1,7 +1,7 @@
 /**
-* Assignment 4: Producer Consumer Problem
+ * Assignment 4: Producer Consumer Problem
  * @file buffer.h
- * @author ??? (TODO: your name)
+ * @author Ben Foltz-Miranda
  * @brief header file for the buffer class
  * @version 0.1
  */
@@ -75,4 +75,4 @@ public:
      */
     void print_buffer();
 };
-#endif //ASSIGN4_BUFFER_H
+#endif  // ASSIGN4_BUFFER_H

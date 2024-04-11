@@ -1,15 +1,16 @@
 /**
-* Assignment 4: Producer Consumer Problem
+ * Assignment 4: Producer Consumer Problem
  * @file main.cpp
- * @author ??? (TODO: your name)
+ * @author Ben Foltz-Miranda
  * @brief The main program for the producer consumer problem.
  * @version 0.1
  */
-//You must complete the all parts marked as "TODO". Delete "TODO" after you are done.
-// Remember to add sufficient and clear comments to your code
+// You must complete the all parts marked as "TODO". Delete "TODO" after you are done.
+//  Remember to add sufficient and clear comments to your code
 #include <iostream>
-#include "buffer.h"
 #include <unistd.h>
+
+#include "buffer.h"
 
 using namespace std;
 
@@ -25,13 +26,13 @@ void *producer(void *param) {
 
     while (true) {
         /* sleep for a random period of time */
-        usleep(rand()%1000000);
+        usleep(rand() % 1000000);
         // TODO: Add synchronization code here
         if (buffer.insert_item(item)) {
             cout << "Producer " << item << ": Inserted item " << item << endl;
             buffer.print_buffer();
         } else {
-            cout << "Producer error condition"  << endl;    // shouldn't come here
+            cout << "Producer error condition" << endl;  // shouldn't come here
         }
     }
 }
@@ -49,7 +50,7 @@ void *consumer(void *param) {
             cout << "Consumer " << item << ": Removed item " << item << endl;
             buffer.print_buffer();
         } else {
-            cout << "Consumer error condition" << endl;    // shouldn't come here
+            cout << "Consumer error condition" << endl;  // shouldn't come here
         }
     }
 }
