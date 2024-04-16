@@ -6,5 +6,5 @@ set(CMAKE_CXX_STANDARD 17)            # Enable c++17 standard
 add_subdirectory(assign1)
 add_subdirectory(assign2)
 add_subdirectory(assign3)
-#add_subdirectory(assign4)
+add_subdirectory(assign4)
 #add_subdirectory(assign5)
