@@ -6,9 +6,8 @@
  * @version 0.1
  */
 
-// You must complete the all parts marked as "TODO". Delete "TODO" after you are done.
-// Remember to add sufficient and clear comments to your code
 #include "buffer.h"
+
 #include <iostream>
 
 /**
@@ -16,21 +15,21 @@
  * @param size the size of the buffer
  */
 Buffer::Buffer(int size) {
-    buffer = std::queue<buffer_item>();
-    this->size = size;
-    count = 0;
-    pthread_mutex_init(&mutex, nullptr);
-    pthread_cond_init(&not_full, nullptr);
-    pthread_cond_init(&not_empty, nullptr);
+    buffer = std::queue<buffer_item>();  // initialize the buffer
+    this->size = size;  // set the size of the buffer
+    count = 0;  // initialize the count to 0
+    pthread_mutex_init(&mutex, nullptr);  // initialize the mutex
+    pthread_cond_init(&not_full, nullptr);  // initialize the not full condition
+    pthread_cond_init(&not_empty, nullptr);  // initialize the not empty condition
 }
 
 /**
  * @brief Destroy the Buffer object
  */
 Buffer::~Buffer() {
-    pthread_mutex_destroy(&mutex);
-    pthread_cond_destroy(&not_full);
-    pthread_cond_destroy(&not_empty);
+    pthread_mutex_destroy(&mutex);  // destroy the mutex
+    pthread_cond_destroy(&not_full);  // destroy the not full condition
+    pthread_cond_destroy(&not_empty);  // destroy the not empty condition
 }
 
 /**
@@ -40,17 +39,17 @@ Buffer::~Buffer() {
  * @return false if not successful
  */
 bool Buffer::insert_item(buffer_item item) {
-    pthread_mutex_lock(&mutex); // lock the mutex
+    pthread_mutex_lock(&mutex);  // lock the mutex
 
     while (is_full()) {  // buffer is full
-        pthread_cond_wait(&not_full, &mutex); // wait for not full condition
+        pthread_cond_wait(&not_full, &mutex);  // wait for not full condition
     }
 
-    buffer.push(item); // insert the item into the buffer
-    count++; // increment the count
+    buffer.push(item);  // insert the item into the buffer
+    count++;  // increment the count
 
-    pthread_cond_signal(&not_empty); // signal that the buffer is not empty
-    pthread_mutex_unlock(&mutex); // unlock the mutex
+    pthread_cond_signal(&not_empty);  // signal that the buffer is not empty
+    pthread_mutex_unlock(&mutex);  // unlock the mutex
     return true;
 }
 
@@ -61,18 +60,18 @@ bool Buffer::insert_item(buffer_item item) {
  * @return false if not successful
  */
 bool Buffer::remove_item(buffer_item* item) {
-    pthread_mutex_lock(&mutex); // lock the mutex
+    pthread_mutex_lock(&mutex);  // lock the mutex
 
-    while (is_empty()) { //buffer is empty
-        pthread_cond_wait(&not_empty, &mutex); // wait for not empty condition
+    while (is_empty()) {  // buffer is empty
+        pthread_cond_wait(&not_empty, &mutex);  // wait for not empty condition
     }
 
-    *item = buffer.front(); // get the item being removed from the buffer
-    buffer.pop(); // remove the first item from the buffer
-    count--; // decrement the count
+    *item = buffer.front();  // get the item being removed from the buffer
+    buffer.pop();  // remove the first item from the buffer
+    count--;  // decrement the count
 
-    pthread_cond_signal(&not_full); // signal that the buffer is not empty
-    pthread_mutex_unlock(&mutex); // unlock the mutex
+    pthread_cond_signal(&not_full);  // signal that the buffer is not empty
+    pthread_mutex_unlock(&mutex);  // unlock the mutex
     return true;
 }
 
@@ -106,10 +105,10 @@ bool Buffer::is_full() const { return get_count() == get_size(); }
 void Buffer::print_buffer() const {
     std::cout << "Buffer: [";
 
-    std::queue<buffer_item> buffer_copy = buffer; // copy the buffer
+    std::queue<buffer_item> buffer_copy = buffer;  // copy the buffer
     while (!buffer_copy.empty()) {
-        std::cout << buffer_copy.front(); // print the front of the buffer
-        buffer_copy.pop(); // remove the front of the buffer
+        std::cout << buffer_copy.front();  // print the front of the buffer
+        buffer_copy.pop();  // remove the front of the buffer
         if (!buffer_copy.empty()) {
             std::cout << ", ";
         }
