@@ -8,9 +8,11 @@
 
 #ifndef ASSIGN4_BUFFER_H
 #define ASSIGN4_BUFFER_H
+#include <pthread.h>
 
 // Define the data type of the buffer items
 typedef int buffer_item;
+#define BUFFER_SIZE 5
 
 /**
  * @brief The bounded buffer class. The number of items in the buffer cannot exceed the size of the buffer.
@@ -18,6 +20,13 @@ typedef int buffer_item;
 class Buffer {
 private:
     // TODO: Add your implementation of the buffer class here
+    buffer_item *buffer;  // the buffer
+    int size;  // the size of the buffer
+    int count;  // the number of items in the buffer
+    int in;  // the index to insert an item
+    int out;  // the index to remove an item
+    pthread_mutex_t mutex;
+    pthread_cond_t not_full, not_empty;
 
 public:
     /**
@@ -51,28 +60,28 @@ public:
      * @brief Get the size of the buffer
      * @return the size of the buffer
      */
-    int get_size();
+    int get_size() const;
 
     /**
      * @brief Get the number of items in the buffer
      * @return the number of items in the buffer
      */
-    int get_count();
+    int get_count() const;
 
     /**
      * @brief Chceck if the buffer is empty
      * @return true if the buffer is empty, else false
      */
-    bool is_empty();
+    bool is_empty() const;
     /**
      * @brief Check if the buffer is full
      * @return true if the buffer is full, else false
      */
-    bool is_full();
+    bool is_full() const;
 
     /**
      * @brief Print the buffer
      */
-    void print_buffer();
+    void print_buffer() const;
 };
 #endif  // ASSIGN4_BUFFER_H

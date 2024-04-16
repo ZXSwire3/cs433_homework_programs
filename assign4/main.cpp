@@ -8,7 +8,9 @@
 // You must complete the all parts marked as "TODO". Delete "TODO" after you are done.
 //  Remember to add sufficient and clear comments to your code
 #include <iostream>
+#include <pthread.h>
 #include <unistd.h>
+#include <semaphore.h>
 
 #include "buffer.h"
 
@@ -27,7 +29,7 @@ void *producer(void *param) {
     while (true) {
         /* sleep for a random period of time */
         usleep(rand() % 1000000);
-        // TODO: Add synchronization code here
+
         if (buffer.insert_item(item)) {
             cout << "Producer " << item << ": Inserted item " << item << endl;
             buffer.print_buffer();
@@ -45,9 +47,9 @@ void *consumer(void *param) {
     while (true) {
         /* sleep for a random period of time */
         usleep(rand() % 1000000);
-        // TODO: Add synchronization code here
+
         if (buffer.remove_item(&item)) {
-            cout << "Consumer " << item << ": Removed item " << item << endl;
+            cout << "Consumer Removed item " << item << endl;
             buffer.print_buffer();
         } else {
             cout << "Consumer error condition" << endl;  // shouldn't come here
@@ -57,10 +59,43 @@ void *consumer(void *param) {
 
 int main(int argc, char *argv[]) {
     /* TODO: 1. Get command line arguments argv[1],argv[2],argv[3] */
+    if (argc != 4) {
+        cerr << "Usage: " << argv[0] << " <buffer size> <number of producer threads> <number of consumer threads>"
+             << endl;
+        exit(1);
+    }
+
+    int const sleeptime = atoi(argv[1]);
+    int const num_producers = atoi(argv[2]);
+    int const num_consumers = atoi(argv[3]);
+
+    cout << "Sleep time: " << sleeptime << " seconds" << endl;
+    cout << "Number of producer threads: " << num_producers << endl;
+    cout << "Number of consumer threads: " << num_consumers << endl;
+
     /* TODO: 2. Initialize buffer and synchronization primitives */
+    // Initialize the buffer
+    buffer = Buffer(BUFFER_SIZE);
+    // Initalize pthreads
+    pthread_t p_threads[num_producers];
+    pthread_t c_threads[num_consumers];
+
+    int thread_ids[num_producers];
+
     /* TODO: 3. Create producer thread(s).
      * You should pass an unique int ID to each producer thread, starting from 1 to number of threads */
+    for (int i = 0; i < num_producers; i++) {
+        thread_ids[i] = i + 1;
+        pthread_create(&p_threads[i], nullptr, producer, &thread_ids[i]);
+    }
+
     /* TODO: 4. Create consumer thread(s) */
+    for (int i = 0; i < num_consumers; i++) {
+        pthread_create(&c_threads[i], nullptr, consumer, nullptr);
+    }
+
     /* TODO: 5. Main thread sleep */
+    sleep(sleeptime);
     /* TODO: 6. Exit */
+    exit(0);
 }
