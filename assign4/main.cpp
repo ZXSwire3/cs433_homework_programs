@@ -65,17 +65,15 @@ int main(int argc, char *argv[]) {
         exit(1);
     }
 
-    int const sleeptime = atoi(argv[1]);
-    int const num_producers = atoi(argv[2]);
-    int const num_consumers = atoi(argv[3]);
+    int const sleeptime = stoi(argv[1]);
+    int const num_producers = stoi(argv[2]);
+    int const num_consumers = stoi(argv[3]);
 
     cout << "Sleep time: " << sleeptime << " seconds" << endl;
     cout << "Number of producer threads: " << num_producers << endl;
     cout << "Number of consumer threads: " << num_consumers << endl;
 
     /* TODO: 2. Initialize buffer and synchronization primitives */
-    // Initialize the buffer
-    buffer = Buffer(BUFFER_SIZE);
     // Initalize pthreads
     pthread_t p_threads[num_producers];
     pthread_t c_threads[num_consumers];

@@ -19,8 +19,7 @@
  * @param size the size of the buffer
  */
 Buffer::Buffer(int size) {
-    // Buffer::size = size;
-    buffer = new int[size];
+    buffer = std::vector<buffer_item>(size);
     this->size = size;
     in = 0;
     out = 0;
@@ -34,7 +33,6 @@ Buffer::Buffer(int size) {
  * @brief Destroy the Buffer object
  */
 Buffer::~Buffer() {
-    delete[] buffer;
     pthread_mutex_destroy(&mutex);
     pthread_cond_destroy(&not_full);
     pthread_cond_destroy(&not_empty);
@@ -48,13 +46,15 @@ Buffer::~Buffer() {
  */
 bool Buffer::insert_item(buffer_item item) {
     pthread_mutex_lock(&mutex); // lock the mutex
+
     while (is_full()) {  // buffer is full
         pthread_cond_wait(&not_full, &mutex); // wait for not full condition
     }
 
     buffer[in] = item; // insert the item into the buffer
-    in = (in + 1) % size;
-    count++;
+    in = (in + 1) % size; // move the in index
+    count++; // increment the count
+
     pthread_cond_signal(&not_empty); // signal that the buffer is not empty
     pthread_mutex_unlock(&mutex); // unlock the mutex
     return true;
@@ -68,6 +68,7 @@ bool Buffer::insert_item(buffer_item item) {
  */
 bool Buffer::remove_item(buffer_item* item) {
     pthread_mutex_lock(&mutex); // lock the mutex
+
     while (is_empty()) { //buffer is empty
         pthread_cond_wait(&not_empty, &mutex); // wait for not empty condition
     }
@@ -75,7 +76,8 @@ bool Buffer::remove_item(buffer_item* item) {
     out = (out + 1) % size; // move the out index
     count--; // decrement the count
 
-    pthread_mutex_unlock(&mutex);
+    pthread_cond_signal(&not_full); // signal that the buffer is not empty
+    pthread_mutex_unlock(&mutex); // unlock the mutex
     return true;
 }
 

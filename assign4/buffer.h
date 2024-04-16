@@ -9,6 +9,7 @@
 #ifndef ASSIGN4_BUFFER_H
 #define ASSIGN4_BUFFER_H
 #include <pthread.h>
+#include <vector>
 
 // Define the data type of the buffer items
 typedef int buffer_item;
@@ -19,8 +20,7 @@ typedef int buffer_item;
  */
 class Buffer {
 private:
-    // TODO: Add your implementation of the buffer class here
-    buffer_item *buffer;  // the buffer
+    std::vector <buffer_item> buffer;  // the buffer
     int size;  // the size of the buffer
     int count;  // the number of items in the buffer
     int in;  // the index to insert an item
