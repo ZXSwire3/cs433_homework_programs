@@ -9,20 +9,15 @@
 // You must complete the all parts marked as "TODO". Delete "TODO" after you are done.
 // Remember to add sufficient and clear comments to your code
 #include "buffer.h"
-
 #include <iostream>
-
-// TODO: Add your implementation of the buffer class here
 
 /**
  * @brief Construct a new Buffer object
  * @param size the size of the buffer
  */
 Buffer::Buffer(int size) {
-    buffer = std::vector<buffer_item>(size);
+    buffer = std::queue<buffer_item>();
     this->size = size;
-    in = 0;
-    out = 0;
     count = 0;
     pthread_mutex_init(&mutex, nullptr);
     pthread_cond_init(&not_full, nullptr);
@@ -51,8 +46,7 @@ bool Buffer::insert_item(buffer_item item) {
         pthread_cond_wait(&not_full, &mutex); // wait for not full condition
     }
 
-    buffer[in] = item; // insert the item into the buffer
-    in = (in + 1) % size; // move the in index
+    buffer.push(item); // insert the item into the buffer
     count++; // increment the count
 
     pthread_cond_signal(&not_empty); // signal that the buffer is not empty
@@ -72,8 +66,9 @@ bool Buffer::remove_item(buffer_item* item) {
     while (is_empty()) { //buffer is empty
         pthread_cond_wait(&not_empty, &mutex); // wait for not empty condition
     }
-    *item = buffer[out]; // get the item being removed from the buffer
-    out = (out + 1) % size; // move the out index
+
+    *item = buffer.front(); // get the item being removed from the buffer
+    buffer.pop(); // remove the first item from the buffer
     count--; // decrement the count
 
     pthread_cond_signal(&not_full); // signal that the buffer is not empty
@@ -110,13 +105,15 @@ bool Buffer::is_full() const { return get_count() == get_size(); }
  */
 void Buffer::print_buffer() const {
     std::cout << "Buffer: [";
-    int index = out;
-    for (int i = 0; i < count; i++) {
-        std::cout << buffer[index];
-        if (i < count - 1) {
+
+    std::queue<buffer_item> buffer_copy = buffer; // copy the buffer
+    while (!buffer_copy.empty()) {
+        std::cout << buffer_copy.front(); // print the front of the buffer
+        buffer_copy.pop(); // remove the front of the buffer
+        if (!buffer_copy.empty()) {
             std::cout << ", ";
         }
-        index = (index + 1) % size;
     }
+
     std::cout << "]" << std::endl;
 }

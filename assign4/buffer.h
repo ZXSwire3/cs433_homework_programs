@@ -9,7 +9,7 @@
 #ifndef ASSIGN4_BUFFER_H
 #define ASSIGN4_BUFFER_H
 #include <pthread.h>
-#include <vector>
+#include <queue>
 
 // Define the data type of the buffer items
 typedef int buffer_item;
@@ -20,11 +20,9 @@ typedef int buffer_item;
  */
 class Buffer {
 private:
-    std::vector <buffer_item> buffer;  // the buffer
+    std::queue<buffer_item> buffer;  // the buffer
     int size;  // the size of the buffer
     int count;  // the number of items in the buffer
-    int in;  // the index to insert an item
-    int out;  // the index to remove an item
     pthread_mutex_t mutex;
     pthread_cond_t not_full, not_empty;
 
