@@ -66,7 +66,7 @@ int main(int argc, char *argv[]) {
     int const num_producers = stoi(argv[2]);
     int const num_consumers = stoi(argv[3]);
 
-    /* 2. Initialize buffer and synchronization primitives */
+    /* 2. Initialize synchronization primitives */
     // Initalize pthreads
     pthread_t p_threads[num_producers];
     pthread_t c_threads[num_consumers];

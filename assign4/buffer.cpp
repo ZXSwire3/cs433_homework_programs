@@ -70,7 +70,7 @@ bool Buffer::remove_item(buffer_item* item) {
     buffer.pop();  // remove the first item from the buffer
     count--;  // decrement the count
 
-    pthread_cond_signal(&not_full);  // signal that the buffer is not empty
+    pthread_cond_signal(&not_full);  // signal that the buffer is not full
     pthread_mutex_unlock(&mutex);  // unlock the mutex
     return true;
 }
