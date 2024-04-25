@@ -1,19 +1,17 @@
 /**
-* Assignment 5: Page replacement algorithms
+ * Assignment 5: Page replacement algorithms
  * @file lifo_replacement.cpp
- * @author ??? (TODO: your name)
+ * @author Ben Foltz-Miranda
  * @brief A class implementing the Last in First Out (LIFO) page replacement algorithms
  * @version 0.1
  */
-//You must complete the all parts marked as "TODO". Delete "TODO" after you are done.
-// Remember to add sufficient and clear comments to your code
+// You must complete the all parts marked as "TODO". Delete "TODO" after you are done.
+//  Remember to add sufficient and clear comments to your code
 
 #include "lifo_replacement.h"
 
 // TODO: Add your implementation here
-LIFOReplacement::LIFOReplacement(int num_pages, int num_frames)
-: Replacement(num_pages, num_frames)
-{
+LIFOReplacement::LIFOReplacement(int num_pages, int num_frames) : Replacement(num_pages, num_frames) {
     // TODO: Add additional implementation code
 }
 

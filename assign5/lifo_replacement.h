@@ -1,12 +1,12 @@
 /**
-* Assignment 5: Page replacement algorithms
+ * Assignment 5: Page replacement algorithms
  * @file lifo_replacement.h
- * @author ??? (TODO: your name)
+ * @author Ben Foltz-Miranda
  * @brief A class implementing the LIFO page replacement algorithms
  * @version 0.1
  */
-//You must complete the all parts marked as "TODO". Delete "TODO" after you are done.
-// Remember to add sufficient and clear comments to your code
+// You must complete the all parts marked as "TODO". Delete "TODO" after you are done.
+//  Remember to add sufficient and clear comments to your code
 
 #pragma once
 
@@ -30,8 +30,8 @@ public:
     LIFOReplacement(int num_pages, int num_frames);
 
     /**
-    * @brief Destructor
-    */
+     * @brief Destructor
+     */
     virtual ~LIFOReplacement();
 
     /**
@@ -48,5 +48,4 @@ public:
      * @return Selected victim page #
      */
     virtual int replace_page(int page_num);
-
 };
