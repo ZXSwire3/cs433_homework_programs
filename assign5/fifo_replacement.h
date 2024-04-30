@@ -12,6 +12,8 @@
 
 // Remember to add comments to your code
 
+#include <queue>
+
 #include "replacement.h"
 
 /**
@@ -20,6 +22,8 @@
 class FIFOReplacement : public Replacement {
 private:
     // TODO: Add necessary member variables to this class
+    queue<int> page_queue;
+    int next_frame_num = 0;
 
 public:
     /**

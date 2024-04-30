@@ -21,6 +21,10 @@ protected:  // subclasses can access these members
     // Member variable for the page table
     PageTable page_table;
     // TODO: Add additional member variables to this class
+    int free_frames;  // count of free frames
+    int num_references;
+    int num_page_faults;
+    int num_page_replacements;
 
 public:
     /**

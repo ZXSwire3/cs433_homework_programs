@@ -1,14 +1,14 @@
 // Remember to add comments to your code
 
-#include <iostream>
-#include <fstream>
-#include <cstdlib>
 #include <cmath>
+#include <cstdlib>
+#include <fstream>
+#include <iostream>
 #include <vector>
 
 #include "fifo_replacement.h"
-#include "lru_replacement.h"
 #include "lifo_replacement.h"
+#include "lru_replacement.h"
 
 // Check if an integer is power of 2
 bool isPowerOfTwo(unsigned int x) {
@@ -17,7 +17,7 @@ bool isPowerOfTwo(unsigned int x) {
 }
 
 int main(int argc, char *argv[]) {
-    //Print basic information about the program
+    // Print basic information about the program
     std::cout << "=================================================================" << std::endl;
     std::cout << "CS 433 Programming assignment 5" << std::endl;
     std::cout << "Author: xxxxxx and xxxxxxx" << std::endl;
@@ -43,7 +43,7 @@ int main(int argc, char *argv[]) {
                   << "  (must be an power of 2 between 256 and 8192, inclusive)." << std::endl;
         return 1;
     }
-    unsigned int phys_mem_size = atoi(argv[2]) << 20; // convert from MB to bytes
+    unsigned int phys_mem_size = atoi(argv[2]) << 20;  // convert from MB to bytes
     if (!isPowerOfTwo(phys_mem_size)) {
         std::cout << "You have entered an invalid parameter for physical memory size (MB)" << std::endl
                   << "  (must be an even integer between 4 and 64, inclusive)." << std::endl;
@@ -51,11 +51,11 @@ int main(int argc, char *argv[]) {
     }
 
     // calculate number of pages and frames;
-    int logic_mem_bits = 27;        // 27-bit logical memory (128 MB logical memory assumed by the assignment)
-    int phys_mem_bits = std::log2(
-            phys_mem_size);        // Num of bits for physical memory addresses, calculated from physical memory size, e.g. 24 bits for 16 MB memory
+    int logic_mem_bits = 27;  // 27-bit logical memory (128 MB logical memory assumed by the assignment)
+    int phys_mem_bits = std::log2(phys_mem_size);  // Num of bits for physical memory addresses, calculated from
+                                                   // physical memory size, e.g. 24 bits for 16 MB memory
     int page_offset_bits = std::log2(
-            page_size);                // Num of bits for page offset, calculated from page size, e.g. 12 bits for 4096 byte page
+            page_size);  // Num of bits for page offset, calculated from page size, e.g. 12 bits for 4096 byte page
     // Number of pages in logical memory = 2^(logic_mem_bits - page_bit)
     int num_pages = 1 << (logic_mem_bits - page_offset_bits);
     // Number of free frames in physical memory = 2^(phys_mem_bits - page_offset_bits)
@@ -95,10 +95,41 @@ int main(int argc, char *argv[]) {
 
     // Test 2: Read and simulate the large list of logical addresses from the input file "large_refs.txt"
     std::cout << "\n================================Test 2==================================================\n";
+    // Open the large reference file
+    in.open("large_refs.txt");
+    if (!in.is_open()) {
+        std::cerr << "Cannot open large_refs.txt to read. Please check your path." << std::endl;
+        return 1;
+    }
+    // Create a vector to store the logical addresses
+    std::vector<int> large_refs;
+    while (in >> val) {
+        large_refs.push_back(val);
+    }
+    std::cout << "Total number of references: " << large_refs.size() << std::endl;
+    in.close();
 
     std::cout << "****************Simulate FIFO replacement****************************" << std::endl;
     // TODO: Add your code to calculate number of page faults using FIFO replacement algorithm
+
+    // Start the timer
+    auto start = std::chrono::high_resolution_clock::now();
+
+    // Create a virtual memory simulation using FIFO replacement algorithm
+    FIFOReplacement vm_fifo_replacement(num_pages, num_frames);
+    for (std::vector<int>::const_iterator it = large_refs.begin(); it != large_refs.end(); ++it) {
+        int page_num = (*it) >> page_offset_bits;
+        vm_fifo_replacement.access_page(page_num, 0);
+    }
+
+    // Stop the timer
+    auto stop = std::chrono::high_resolution_clock::now();
+    // Calculate the elapsed time
+    auto duration = std::chrono::duration<double>(stop - start);
+
     // TODO: print the statistics and run-time
+    vm_fifo_replacement.print_statistics();
+    std::cout << "Elapsed time: " << duration.count() << " seconds" << std::endl;
 
     std::cout << "****************Simulate LIFO replacement****************************" << std::endl;
     // TODO: Add your code to calculate number of page faults using LIFO replacement algorithm
@@ -107,5 +138,4 @@ int main(int argc, char *argv[]) {
     std::cout << "****************Simulate LRU replacement****************************" << std::endl;
     // TODO: Add your code to calculate number of page faults using LRU replacement algorithm
     // TODO: print the statistics and run-time
-
 }
