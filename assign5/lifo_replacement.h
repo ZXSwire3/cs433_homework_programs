@@ -11,6 +11,7 @@
 #pragma once
 
 // Remember to add comments to your code
+#include <stack>
 
 #include "replacement.h"
 
@@ -20,6 +21,8 @@
 class LIFOReplacement : public Replacement {
 private:
     // TODO: Add necessary member variables to this class
+    stack<int> page_stack;
+    int next_frame_num = 0;
 
 public:
     /**

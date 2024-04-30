@@ -133,7 +133,24 @@ int main(int argc, char *argv[]) {
 
     std::cout << "****************Simulate LIFO replacement****************************" << std::endl;
     // TODO: Add your code to calculate number of page faults using LIFO replacement algorithm
+    // Start the timer
+    start = std::chrono::high_resolution_clock::now();
+
+    // Create a virtual memory simulation using FIFO replacement algorithm
+    LIFOReplacement vm_lifo_replacement(num_pages, num_frames);
+    for (std::vector<int>::const_iterator it = large_refs.begin(); it != large_refs.end(); ++it) {
+        int page_num = (*it) >> page_offset_bits;
+        vm_lifo_replacement.access_page(page_num, 0);
+    }
+
+    // Stop the timer
+    stop = std::chrono::high_resolution_clock::now();
+    // Calculate the elapsed time
+    duration = std::chrono::duration<double>(stop - start);
+
     // TODO: print the statistics and run-time
+    vm_lifo_replacement.print_statistics();
+    std::cout << "Elapsed time: " << duration.count() << " seconds" << std::endl;
 
     std::cout << "****************Simulate LRU replacement****************************" << std::endl;
     // TODO: Add your code to calculate number of page faults using LRU replacement algorithm
