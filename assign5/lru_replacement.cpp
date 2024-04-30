@@ -20,7 +20,7 @@ LRUReplacement::~LRUReplacement() {
     // TODO: Add necessary code here
 }
 
-// Accesss a page alreay in physical memory
+// Accesss a page already in physical memory
 void LRUReplacement::touch_page(int page_num) {
     // TODO: Update your data structure LRU replacement
 }

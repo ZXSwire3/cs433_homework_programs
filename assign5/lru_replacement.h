@@ -33,7 +33,7 @@ public:
     virtual ~LRUReplacement();
 
     /**
-     * @brief Accesss a page alreay in physical memory
+     * @brief Accesss a page already in physical memory
      * It may be overridden in a subclass
      * @param page_num The logical page number.
      */
