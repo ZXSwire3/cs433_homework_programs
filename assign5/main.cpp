@@ -5,6 +5,7 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
+#include <chrono>
 
 #include "fifo_replacement.h"
 #include "lifo_replacement.h"
