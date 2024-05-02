@@ -7,6 +7,7 @@ set(SOURCE_FILES pagetable.cpp replacement.cpp fifo_replacement.cpp lifo_replace
 
 # Copy small_refs.txt to build directory
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/small_refs.txt ${CMAKE_CURRENT_BINARY_DIR}/small_refs.txt COPYONLY)
+# Copy large_refs.txt to build directory
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/large_refs.txt ${CMAKE_CURRENT_BINARY_DIR}/large_refs.txt COPYONLY)
 
 # Add executable target with source files listed in SOURCE_FILES variable
