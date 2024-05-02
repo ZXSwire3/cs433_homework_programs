@@ -5,30 +5,25 @@
  * @brief A class implementing the Last in First Out (LIFO) page replacement algorithms
  * @version 0.1
  */
-// You must complete the all parts marked as "TODO". Delete "TODO" after you are done.
-//  Remember to add sufficient and clear comments to your code
 
 #include "lifo_replacement.h"
 
-// TODO: Add your implementation here
 LIFOReplacement::LIFOReplacement(int num_pages, int num_frames) : Replacement(num_pages, num_frames) {
-    // TODO: Add additional implementation code
-    free_frames = num_frames;
+    free_frames = num_frames;  // Initialize the number of free frames
 }
 
-// TODO: Add your implementations for desctructor, load_page, replace_page here
-LIFOReplacement::~LIFOReplacement() {
-    // TODO: Add necessary code here
-}
+LIFOReplacement::~LIFOReplacement() {}
 
 // Access an invalid page, but free frames are available
 void LIFOReplacement::load_page(int page_num) {
-    // The page is not in the page table, so we need to load it
+    // Create a new page entry
     PageEntry new_page;
+    // Set the page as valid
     new_page.valid = true;
+    // Set the frame number
     new_page.frame_num = next_frame_num;
 
-    // Add the page number to the FIFO queue
+    // Add the page number to the LIFO queue
     page_stack.push(page_num);
 
     // Decrememnt the count of free frames
@@ -43,21 +38,26 @@ void LIFOReplacement::load_page(int page_num) {
 
 // Access an invalid page and no free frames are available
 int LIFOReplacement::replace_page(int page_num) {
-    // The page is not in the page table, so we need to load it
+    // Create a new page entry
     PageEntry new_page;
+    // Set the page as valid
     new_page.valid = true;
+    // Set the frame number
+    new_page.frame_num = next_frame_num;
 
     // Get the page number of the page to be replaced
     int victim_page = page_stack.top();
+    // Remove the page number from the LIFO queue
     page_stack.pop();
 
-    // Add the page number to the FIFO queue
+    // Add the page number to the LIFO queue
     page_stack.push(page_num);
 
     // Update the page table
     page_table[page_num] = new_page;
+    // Set the replaced page as invalid
     page_table[victim_page].valid = false;
 
+    // Return the page number of the page to be replaced
     return victim_page;
-    // return 0;
 }
