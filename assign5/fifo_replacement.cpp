@@ -12,7 +12,7 @@ FIFOReplacement::FIFOReplacement(int num_pages, int num_frames) : Replacement(nu
     free_frames = num_frames;  // Initialize the number of free frames
 }
 
-FIFOReplacement::~FIFOReplacement() {}
+FIFOReplacement::~FIFOReplacement() = default;
 
 // Access an invalid page, but free frames are available
 void FIFOReplacement::load_page(int page_num) {

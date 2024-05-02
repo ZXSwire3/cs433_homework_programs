@@ -12,7 +12,7 @@ LIFOReplacement::LIFOReplacement(int num_pages, int num_frames) : Replacement(nu
     free_frames = num_frames;  // Initialize the number of free frames
 }
 
-LIFOReplacement::~LIFOReplacement() {}
+LIFOReplacement::~LIFOReplacement() = default;
 
 // Access an invalid page, but free frames are available
 void LIFOReplacement::load_page(int page_num) {
