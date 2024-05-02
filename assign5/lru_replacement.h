@@ -9,6 +9,7 @@
 #pragma once
 
 #include <unordered_map>
+
 #include "replacement.h"
 
 // A node in the linked list
@@ -72,4 +73,9 @@ public:
      * @return Selected victim page #
      */
     virtual int replace_page(int page_num);
+
+    // Disable copy constructor
+    LRUReplacement(const LRUReplacement &) = delete;
+    // Disable assignment operator
+    LRUReplacement &operator=(const LRUReplacement &) = delete;
 };
