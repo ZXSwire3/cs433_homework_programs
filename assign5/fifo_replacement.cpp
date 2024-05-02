@@ -5,28 +5,22 @@
  * @brief A class implementing the FIFO page replacement algorithms
  * @version 0.1
  */
-// You must complete the all parts marked as "TODO". Delete "TODO" after you are done.
-//  Remember to add sufficient and clear comments to your code
 
 #include "fifo_replacement.h"
 
-// TODO: Add your implementation here
 FIFOReplacement::FIFOReplacement(int num_pages, int num_frames) : Replacement(num_pages, num_frames) {
-    // TODO: Add additional implementation code
-    free_frames = num_frames;
-
+    free_frames = num_frames;  // Initialize the number of free frames
 }
 
-// TODO: Add your implementations for desctructor, load_page, replace_page here
-FIFOReplacement::~FIFOReplacement() {
-    // TODO: Add necessary code here
-}
+FIFOReplacement::~FIFOReplacement() {}
 
 // Access an invalid page, but free frames are available
 void FIFOReplacement::load_page(int page_num) {
-    // The page is not in the page table, so we need to load it
+    // Create a new page entry
     PageEntry new_page;
+    // Set the page as valid
     new_page.valid = true;
+    // Set the frame number
     new_page.frame_num = next_frame_num;
 
     // Add the page number to the FIFO queue
@@ -44,12 +38,16 @@ void FIFOReplacement::load_page(int page_num) {
 
 // Access an invalid page and no free frames are available
 int FIFOReplacement::replace_page(int page_num) {
-    // The page is not in the page table, so we need to load it
+    // Create a new page entry
     PageEntry new_page;
+    // Set the page as valid
     new_page.valid = true;
+    // Set the frame number
+    new_page.frame_num = next_frame_num;
 
     // Get the page number of the page to be replaced
     int victim_page = page_queue.front();
+    // Remove the page number from the FIFO queue
     page_queue.pop();
 
     // Add the page number to the FIFO queue
@@ -57,8 +55,9 @@ int FIFOReplacement::replace_page(int page_num) {
 
     // Update the page table
     page_table[page_num] = new_page;
+    // Set the replaced page as invalid
     page_table[victim_page].valid = false;
 
+    // Return the page number of the page to be replaced
     return victim_page;
-    // return 0;
 }

@@ -5,12 +5,8 @@
  * @brief A class implementing the FIFO page replacement algorithms
  * @version 0.1
  */
-// You must complete the all parts marked as "TODO". Delete "TODO" after you are done.
-//  Remember to add sufficient and clear comments to your code
 
 #pragma once
-
-// Remember to add comments to your code
 
 #include <queue>
 
@@ -21,9 +17,8 @@
  */
 class FIFOReplacement : public Replacement {
 private:
-    // TODO: Add necessary member variables to this class
-    queue<int> page_queue;
-    int next_frame_num = 0;
+    queue<int> page_queue;  // A queue to store the order of page access
+    int next_frame_num = 0;  // The next available frame number
 
 public:
     /**
