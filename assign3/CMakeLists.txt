@@ -5,23 +5,23 @@ set(CMAKE_CXX_STANDARD 17)            # Enable c++17 standard
 set(SOURCE_FILES pcb.h scheduler.h)
 
 set(FCFS_FILES
-        driver_fcfs.cpp scheduler_fcfs.h scheduler_fcfs.cpp
+        driver_fcfs.cpp scheduler_fcfs.cpp
 )
 
 set(SJF_FILES
-        driver_sjf.cpp scheduler_sjf.h scheduler_sjf.cpp
+        driver_sjf.cpp scheduler_sjf.cpp
 )
 
 set(PRIORITY_FILES
-        driver_priority.cpp scheduler_priority.h scheduler_priority.cpp
+        driver_priority.cpp scheduler_priority.cpp
 )
 
 set(RR_FILES
-        driver_rr.cpp scheduler_rr.h scheduler_rr.cpp
+        driver_rr.cpp scheduler_rr.cpp
 )
 
 set(PRIORITY_RR_FILES
-        driver_priority_rr.cpp scheduler_priority_rr.h scheduler_priority_rr.cpp
+        driver_priority_rr.cpp scheduler_priority_rr.cpp
 )
 
 # Copy schedule.txt to build directory
