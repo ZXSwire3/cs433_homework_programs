@@ -39,6 +39,8 @@ void LRUReplacement::load_page(int page_num) {
     new_page.valid = true;
     // Set the frame number
     new_page.frame_num = next_frame_num;
+    // Set the dirty bit
+    new_page.dirty = false;
     // Update the page table
     page_table[page_num] = new_page;
 
@@ -73,6 +75,8 @@ int LRUReplacement::replace_page(int page_num) {
     new_page.valid = true;
     // Set the frame number
     new_page.frame_num = victim->page_num;
+    // Set the dirty bit
+    new_page.dirty = true;
 
     // Create a new node
     Node* node = new Node();

@@ -22,6 +22,8 @@ void LIFOReplacement::load_page(int page_num) {
     new_page.valid = true;
     // Set the frame number
     new_page.frame_num = next_frame_num;
+    // Set the dirty bit
+    new_page.dirty = false;
 
     // Add the page number to the LIFO queue
     page_stack.push(page_num);
@@ -44,6 +46,8 @@ int LIFOReplacement::replace_page(int page_num) {
     new_page.valid = true;
     // Set the frame number
     new_page.frame_num = next_frame_num;
+    // Set the dirty bit
+    new_page.dirty = true;
 
     // Get the page number of the page to be replaced
     int victim_page = page_stack.top();
