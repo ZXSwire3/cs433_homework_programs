@@ -50,7 +50,7 @@ int FIFOReplacement::replace_page(int page_num) {
     new_page.dirty = true;
 
     // Get the page number of the page to be replaced
-    int victim_page = page_queue.front();
+    int victim_page_number = page_queue.front();
     // Remove the page number from the FIFO queue
     page_queue.pop();
 
@@ -60,8 +60,8 @@ int FIFOReplacement::replace_page(int page_num) {
     // Update the page table
     page_table[page_num] = new_page;
     // Set the replaced page as invalid
-    page_table[victim_page].valid = false;
+    page_table[victim_page_number].valid = false;
 
     // Return the page number of the page to be replaced
-    return victim_page;
+    return victim_page_number;
 }
