@@ -105,22 +105,26 @@ int LRUReplacement::replace_page(int page_num) {
     return victim_page_number;
 }
 
-void LRUReplacement::add(Node* node) {
-    // Create a temporary node to store the next node
+void LRUReplacement::add(Node* new_node) {
+    // Create a node to store the node after the head
     Node* temp = head->next;
-    // Set the new node's next and prev pointers
-    node->next = temp;
-    node->prev = head;
-    // Set the head's next and the next node's prev pointers
-    head->next = node;
-    temp->prev = node;
+    // Set the new node's next node point to the temp node
+    new_node->next = temp;
+    // Set the new node's prev node point to the head
+    new_node->prev = head;
+    // Set the head's next node point to the new node
+    head->next = new_node;
+    // Set the temp node's prev node point to the new node
+    temp->prev = new_node;
 }
 
 void LRUReplacement::remove(Node* node) {
-    // Create pointers to the previous and next nodes
+    // Create a node to store the node previous to the node to be removed
     Node* prev_node = node->prev;
+    // Create a node to store the node next to the node to be removed
     Node* next_node = node->next;
-    // Set the previous and next nodes' pointers
+    // Set the previous node's next node point to the next node
     prev_node->next = next_node;
+    // Set the next node's previous node point to the previous node
     next_node->prev = prev_node;
 }
