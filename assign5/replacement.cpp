@@ -19,7 +19,6 @@ Replacement::Replacement(int num_pages, int num_frames) : page_table(num_pages) 
 
 // Destructor
 Replacement::~Replacement() {
-    // TOOD: Add your code here
 }
 
 // Simulate a single page access
