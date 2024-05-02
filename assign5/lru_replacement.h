@@ -5,20 +5,40 @@
  * @brief A class implementing the LRU page replacement algorithms
  * @version 0.1
  */
-// You must complete the all parts marked as "TODO". Delete "TODO" after you are done.
-//  Remember to add sufficient and clear comments to your code
 
 #pragma once
 
-// Remember to add comments to your code
+#include <list>
 
 #include "replacement.h"
+
+// A node in the linked list
+struct Node {
+    int page_num;  // The page number
+    Node *prev, *next;  // Pointers to the previous and next nodes
+};
 
 /**
  * @brief A class to simulate the least recently used (LRU) page replacement algorithm.
  */
 class LRUReplacement : public Replacement {
-    // TODO: Add your implementation to this class
+private:
+    std::unordered_map<int, Node *> page_map;  // A map to store the page number and its corresponding node
+    Node *head, *tail;  // The head and tail of the linked list
+    int next_frame_num = 0;  // The next available frame number
+
+    /**
+     * @brief Add a node to the front of the list
+     * @param node The node to be added to the list
+     */
+    void add(Node *node);
+
+    /**
+     * @brief Remove a node from the list
+     * @param node The node to be removed from the list
+     */
+    void remove(Node *node);  // Remove a node from the list
+
 public:
     /**
      * @brief Constructor

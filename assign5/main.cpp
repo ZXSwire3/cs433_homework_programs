@@ -87,7 +87,7 @@ int main(int argc, char *argv[]) {
         int page_num = (*it) >> page_offset_bits;
         bool isPageFault = vm.access_page(page_num, 0);
         PageEntry pg = vm.getPageEntry(page_num);
-        std::cout << "Logical address: " << *it << ", \tpage number: " << page_num;
+        std::cout << "Logical address: " << *it << ",\t\tpage number: " << page_num;
         std::cout << ", \tframe number = " << pg.frame_num << ", \tis page fault? " << isPageFault << std::endl;
     }
     in.close();
@@ -110,7 +110,6 @@ int main(int argc, char *argv[]) {
     in.close();
 
     std::cout << "****************Simulate FIFO replacement****************************" << std::endl;
-    // TODO: Add your code to calculate number of page faults using FIFO replacement algorithm
 
     // Start the timer
     auto start = std::chrono::high_resolution_clock::now();
@@ -127,12 +126,11 @@ int main(int argc, char *argv[]) {
     // Calculate the elapsed time
     auto duration = std::chrono::duration<double>(stop - start);
 
-    // TODO: print the statistics and run-time
+    // print the statistics and run-time
     vm_fifo_replacement.print_statistics();
     std::cout << "Elapsed time: " << duration.count() << " seconds" << std::endl;
 
     std::cout << "****************Simulate LIFO replacement****************************" << std::endl;
-    // TODO: Add your code to calculate number of page faults using LIFO replacement algorithm
     // Start the timer
     start = std::chrono::high_resolution_clock::now();
 
@@ -148,11 +146,27 @@ int main(int argc, char *argv[]) {
     // Calculate the elapsed time
     duration = std::chrono::duration<double>(stop - start);
 
-    // TODO: print the statistics and run-time
+    // print the statistics and run-time
     vm_lifo_replacement.print_statistics();
     std::cout << "Elapsed time: " << duration.count() << " seconds" << std::endl;
 
     std::cout << "****************Simulate LRU replacement****************************" << std::endl;
-    // TODO: Add your code to calculate number of page faults using LRU replacement algorithm
-    // TODO: print the statistics and run-time
+    // Start the timer
+    start = std::chrono::high_resolution_clock::now();
+
+    // Create a virtual memory simulation using FIFO replacement algorithm
+    LRUReplacement vm_lru_replacement(num_pages, num_frames);
+    for (std::vector<int>::const_iterator it = large_refs.begin(); it != large_refs.end(); ++it) {
+        int page_num = (*it) >> page_offset_bits;
+        vm_lru_replacement.access_page(page_num, 0);
+    }
+
+    // Stop the timer
+    stop = std::chrono::high_resolution_clock::now();
+    // Calculate the elapsed time
+    duration = std::chrono::duration<double>(stop - start);
+
+    // print the statistics and run-time
+    vm_lru_replacement.print_statistics();
+    std::cout << "Elapsed time: " << duration.count() << " seconds" << std::endl;
 }
