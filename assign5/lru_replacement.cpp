@@ -66,13 +66,15 @@ void LRUReplacement::load_page(int page_num) {
 
 // Access an invalid page and no free frames are available
 int LRUReplacement::replace_page(int page_num) {
-    // Get the page number of the victim page
+    // Get the victim page node from the linked list
     Node* victim = tail->prev;
-    // Remove the victim page from the map
+    // Remove the victim page number from the map
     page_map.erase(victim->page_num);
-    // Remove the victim page from the list
+    // Remove the victim page from the linked list
     remove(victim);
-    int victim_page = victim->page_num;
+    // Get the page number of the page to be replaced
+    int victim_page_number = victim->page_num;
+    // Delete the victim node
     delete victim;
 
 
@@ -81,7 +83,7 @@ int LRUReplacement::replace_page(int page_num) {
     // Set the page as valid
     new_page.valid = true;
     // Set the frame number
-    new_page.frame_num = victim_page;
+    new_page.frame_num = victim_page_number;
     // Set the dirty bit
     new_page.dirty = true;
 
@@ -97,10 +99,10 @@ int LRUReplacement::replace_page(int page_num) {
     // Update the page table
     page_table[page_num] = new_page;
     // Set the replaced page as invalid
-    page_table[victim_page].valid = false;
+    page_table[victim_page_number].valid = false;
 
     // Return the page number of the page to be replaced
-    return victim_page;
+    return victim_page_number;
 }
 
 void LRUReplacement::add(Node* node) {
