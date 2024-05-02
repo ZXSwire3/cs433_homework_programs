@@ -28,16 +28,16 @@ private:
     int next_frame_num = 0;  // The next available frame number
 
     /**
-     * @brief Add a node to the front of the list
-     * @param node The node to be added to the list
+     * @brief Add a node to the front of the linked list
+     * @param new_node The node to be added to the linked list
      */
-    void add(Node *node);
+    void add(Node *new_node);
 
     /**
-     * @brief Remove a node from the list
-     * @param node The node to be removed from the list
+     * @brief Remove a node from the linked list
+     * @param node The node to be removed from the linked list
      */
-    void remove(Node *node);  // Remove a node from the list
+    void remove(Node *node);
 
 public:
     /**
