@@ -5,17 +5,12 @@
  * @brief A base class for different page replacement algorithms.
  * @version 0.1
  */
-// You must complete the all parts marked as "TODO". Delete "TODO" after you are done.
-//  Remember to add sufficient and clear comments to your code
 #include "replacement.h"
 
 #include <iostream>
 
-// TODO: Add your implementation of the Replacement member functions here
-
 // Constructor
 Replacement::Replacement(int num_pages, int num_frames) : page_table(num_pages) {
-    // TODO: Add your implementation here
     free_frames = num_frames;  // Initialize the number of free frames
     num_references = 0;  // Initialize the number of references
     num_page_faults = 0;  // Initialize the number of page faults
@@ -55,8 +50,7 @@ bool Replacement::access_page(int page_num, bool is_write) {
 
 // Print out statistics of simulation
 void Replacement::print_statistics() const {
-    // TODO: print out the number of references, number of page faults and number of page replacements
-    std::cout << "Number of references: \t\t" << num_references << std::endl;
-    std::cout << "Number of page faults: \t\t" << num_page_faults << std::endl;
+    std::cout << "Number of references: \t\t\t" << num_references << std::endl;
+    std::cout << "Number of page faults: \t\t\t" << num_page_faults << std::endl;
     std::cout << "Number of page replacements: \t" << num_page_replacements << std::endl;
 }
