@@ -17,8 +17,12 @@ LRUReplacement::LRUReplacement(int num_pages, int num_frames) : Replacement(num_
 }
 
 LRUReplacement::~LRUReplacement() {
-    delete head; // Delete the head node
-    delete tail; // Delete the tail node
+    Node* current = head;  // Set the current node to the head
+    while (current != nullptr) {
+        Node* next_node = current->next;  // Set the next node
+        delete current;  // Delete the current node
+        current = next_node;  // Set the current node to the next node
+    }
 }
 
 // Accesss a page already in physical memory
@@ -68,13 +72,16 @@ int LRUReplacement::replace_page(int page_num) {
     page_map.erase(victim->page_num);
     // Remove the victim page from the list
     remove(victim);
+    int victim_page = victim->page_num;
+    delete victim;
+
 
     // Create a new page entry
     PageEntry new_page;
     // Set the page as valid
     new_page.valid = true;
     // Set the frame number
-    new_page.frame_num = victim->page_num;
+    new_page.frame_num = victim_page;
     // Set the dirty bit
     new_page.dirty = true;
 
@@ -90,10 +97,10 @@ int LRUReplacement::replace_page(int page_num) {
     // Update the page table
     page_table[page_num] = new_page;
     // Set the replaced page as invalid
-    page_table[victim->page_num].valid = false;
+    page_table[victim_page].valid = false;
 
     // Return the page number of the page to be replaced
-    return victim->page_num;
+    return victim_page;
 }
 
 void LRUReplacement::add(Node* node) {
